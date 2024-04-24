@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 
@@ -7,11 +7,11 @@ export const SendMoney = () => {
     const [searchParams] = useSearchParams();
     const id = searchParams.get("userId");
     const name = searchParams.get("name");
-    // console.log(name);
-    // console.log(id);
+
+    const navigate = useNavigate();
     
     return (
-    <div className="flex justify-center h-screen bg-gray-100">
+    <div id="send-money" className="flex justify-center h-screen bg-gray-100">
         <div className="h-full flex flex-col justify-center">
             <div className="border h-min text-card-foreground max-w-md p-4 space-y-8 w-96 bg-white shadow-lg rounded-lg">
                 <div className="flex flex-col space-y-1.5 p-6">
@@ -33,20 +33,21 @@ export const SendMoney = () => {
                             }} type="number" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" id="amount" placeholder="Enter amount"/>
                         </div>
                         <button onClick={async () => {
+                            if(amount <= 0){
+                                return;
+                            }
                             const token = localStorage.getItem("token");
-                            // console.log(token);
-                            // console.log(amount)
-                            const response = await axios.post('http://localhost:3000/api/v1/account/transfer', {
-                                // Your request body data here
+                            const response = await axios.post("http://localhost:3000/api/v1/account/transfer", {
                                 to: id,
                                 amount: parseInt(amount)
                             }, {
                                 headers: {
-                                    'Content-Type': 'application/json', // Set your Content-Type header
-                                    Authorization: `Bearer ${token}` // Replace YOUR_ACCESS_TOKEN with your actual access token
+                                    Authorization: `Bearer ${token}`
                                 }
-                            })
-                            // console.log(response.data);
+                            });
+                            if(response.status == 200){
+                                navigate("/paymentdone");
+                            }
                         }} className="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white"> Initiate Transfer </button>
                     </div>
                 </div>

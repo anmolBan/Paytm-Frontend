@@ -20,7 +20,7 @@ export function Dashboard(){
     });
             
     return (
-        <div>
+        <div id="dashboard">
             <AppBar></AppBar>
             <div className="m-8">
                 <Balance value={balance}></Balance>
