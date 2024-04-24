@@ -5,17 +5,30 @@ export function AppBar(){
     const [name, setName] = useState("");
 
     useEffect(() => {
-        const token = localStorage.getItem("token")
-        axios.get("http://localhost:3000/api/v1/user/info", {
-            headers: {
-                Authorization: `Bearer ${token}`
+        try{
+            const token = localStorage.getItem("token")
+            axios.get("http://localhost:3000/api/v1/user/info", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+                .then((response) => {
+                    let local = String(response.data.user.firstName);
+                    local = local.charAt(0).toUpperCase() + local.slice(1);
+                    setName(local);
+                });
+        } catch(error){
+            if(error.response){
+                console.error("Request failed with status code:", error.response.status);
+                console.error("Error message:", error.response.data.message);
             }
-        })
-            .then((response) => {
-                let local = String(response.data.user.firstName);
-                local = local.charAt(0).toUpperCase() + local.slice(1);
-                setName(local);
-            });
+            else if(error.request){
+                console.error("No response recieved from the server");
+            }
+            else{
+                console.error("Error occurred:", error.message);
+            }
+        }
     }, []);
     return(
         <div className="shadow h-14 flex justify-between">

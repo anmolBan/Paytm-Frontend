@@ -12,6 +12,28 @@ export function Signin(){
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
+    async function onClickHandler(){
+        try{
+            const response = await axios.post("http://localhost:3000/api/v1/user/signin", {
+                username,
+                password
+            });
+            localStorage.setItem("token", response.data.token);
+            navigate("/dashboard");
+        }catch(error){
+            if(error.response){
+                console.error("Request failed with status code:", error.response.status);
+                console.error("Error message:", error.response.data.message);
+            }
+            else if(error.request){
+                console.error("No response recieved from the server");
+            }
+            else{
+                console.error("Error occurred:", error.message);
+            }
+        }
+    }
+
     return (
         <div className="bg-slate-300 h-screen flex justify-center">
             <div className="flex flex-col justify-center">
@@ -21,14 +43,7 @@ export function Signin(){
                     <InputBox onChange={(e) => setUsername(e.target.value)} label={"Email"} placeholder={"johndoe@gmail.com"}/>
                     <InputBox onChange={(e) => setPassword(e.target.value)} label={"Password"} placeholder={""}/>
                     <div className="pt-4">
-                        <Button onClick={async () => {
-                            const response = await axios.post("http://localhost:3000/api/v1/user/signin", {
-                                username,
-                                password
-                            });
-                            localStorage.setItem("token", response.data.token);
-                            navigate("/dashboard");
-                        }} label={"Sign in"}/>
+                        <Button onClick={onClickHandler} label={"Sign in"}/>
                     </div>
                     <BottomWarning label={"Don't have an account?"} buttonText={"Sign up"} to={"/signup"}/>
                 </div>

@@ -8,15 +8,28 @@ export function Dashboard(){
     const [balance, setBalance] = useState(0);
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        axios.get("http://localhost:3000/api/v1/account/balance", {
-            headers : {
-                Authorization: `Bearer ${token}`
+        try{
+            const token = localStorage.getItem("token");
+            axios.get("http://localhost:3000/api/v1/account/balance", {
+                headers : {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then((response) => {
+                setBalance(response.data.balance);
+            });
+        } catch(error){
+            if(error.response){
+                console.error("Request failed with status code:", error.response.status);
+                console.error("Error message:", error.response.data.message);
             }
-        })
-        .then((response) => {
-            setBalance(response.data.balance);
-        });
+            else if(error.request){
+                console.error("No response recieved from the server");
+            }
+            else{
+                console.error("Error occurred:", error.message);
+            }
+        }
     });
             
     return (

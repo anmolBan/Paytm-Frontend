@@ -8,20 +8,32 @@ export function Users(){
     const [filter, setFilter] = useState("");
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
-        axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter, {
-            headers : {
-                Authorization: `Bearer ${token}`
+        try{
+            const token = localStorage.getItem("token");
+            axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter, {
+                headers : {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then((response) => {
+                setUsers(response.data.users);
+            });
+        } catch(error){
+            if(error.response){
+                console.error("Request failed with status code:", error.response.status);
+                console.error("Error message:", error.response.data.message);
             }
-        })
-        .then((response) => {
-            setUsers(response.data.users);
-        });
+            else if(error.request){
+                console.error("No response recieved from the server");
+            }
+            else{
+                console.error("Error occurred:", error.message);
+            }
+        }
     }, [filter]);
 
     return(
         <>
-            
             <div className="font-bold mt-6 text-lg">
                 Users
             </div>

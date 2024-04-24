@@ -9,6 +9,36 @@ export const SendMoney = () => {
     const name = searchParams.get("name");
 
     const navigate = useNavigate();
+
+    async function onClickHandler(){
+        try{
+            if(amount <= 0){
+                return;
+            }
+            const token = localStorage.getItem("token");
+            const response = await axios.post("http://localhost:3000/api/v1/account/transfer", {
+                to: id,
+                amount: parseInt(amount)
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            navigate("/paymentstatus?status=" + response.status + "&message=" + response.data.message);
+        } catch(error){
+            if(error.response){
+                console.error("Request failed with status code:", error.response.status);
+                console.error("Error message:", error.response.data.message);
+                navigate("/paymentstatus?status=" + error.response.status + "&message=" + error.response.data.message);
+            }
+            else if(error.request){
+                console.error("No response recieved from the server");
+            }
+            else{
+                console.error("Error occurred:", error.message);
+            }
+        }
+    }
     
     return (
     <div id="send-money" className="flex justify-center h-screen bg-gray-100">
@@ -32,23 +62,7 @@ export const SendMoney = () => {
                                 setAmount(e.target.value)
                             }} type="number" className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" id="amount" placeholder="Enter amount"/>
                         </div>
-                        <button onClick={async () => {
-                            if(amount <= 0){
-                                return;
-                            }
-                            const token = localStorage.getItem("token");
-                            const response = await axios.post("http://localhost:3000/api/v1/account/transfer", {
-                                to: id,
-                                amount: parseInt(amount)
-                            }, {
-                                headers: {
-                                    Authorization: `Bearer ${token}`
-                                }
-                            });
-                            if(response.status == 200){
-                                navigate("/paymentdone");
-                            }
-                        }} className="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white"> Initiate Transfer </button>
+                        <button onClick={onClickHandler} className="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white"> Initiate Transfer </button>
                     </div>
                 </div>
             </div>

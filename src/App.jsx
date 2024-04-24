@@ -3,7 +3,7 @@ import { Signup } from "./pages/Signup";
 import { Signin } from "./pages/Signin";
 import { Dashboard } from "./pages/Dashboard";
 import { SendMoney } from "./pages/SendMoney";
-import { PaymentDone } from "./pages/PaymentDone";
+import { PaymentStatus } from "./pages/PaymentStatus";
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
           <Route path="/signin" element={<Signin/>}></Route>
           <Route path="/dashboard" element={<Dashboard/>}></Route>
           <Route path="/send" element={<SendMoney/>}></Route>
-          <Route path="/paymentdone" element={<PaymentDone/>}></Route>
+          <Route path="/paymentstatus" element={<PaymentStatus/>}></Route>
         </Routes>
       </BrowserRouter>
     </>
