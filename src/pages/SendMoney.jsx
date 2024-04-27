@@ -16,7 +16,7 @@ export const SendMoney = () => {
                 return;
             }
             const token = localStorage.getItem("token");
-            const response = await axios.post("http://localhost:3000/api/v1/account/transfer", {
+            const response = await axios.post("https://anmolban-paytm.onrender.com/api/v1/account/transfer", {
                 to: id,
                 amount: parseInt(amount)
             }, {

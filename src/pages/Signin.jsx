@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BottomWarning } from "../components/BottomWarning";
 import { Button } from "../components/Button";
 import { Heading } from "../components/Heading";
@@ -12,9 +12,16 @@ export function Signin(){
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if(token){
+            navigate("/dashboard");
+        }
+    })
+
     async function onClickHandler(){
         try{
-            const response = await axios.post("http://localhost:3000/api/v1/user/signin", {
+            const response = await axios.post("https://anmolban-paytm.onrender.com/api/v1/user/signin", {
                 username,
                 password
             });

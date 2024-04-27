@@ -3,7 +3,7 @@ import { SubHeading } from "../components/SubHeading";
 import { InputBox } from "../components/InputBox";
 import { Button } from "../components/Button";
 import { BottomWarning } from "../components/BottomWarning";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -15,9 +15,16 @@ export function Signup(){
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if(token){
+            navigate("/dashboard");
+        }
+    }, []);
+
     async function onClickHandler(){
         try{
-            const response = await axios.post("http://localhost:3000/api/v1/user/signup", {
+            const response = await axios.post("https://anmolban-paytm.onrender.com/api/v1/user/signup", {
                 username,
                 firstName,
                 lastName,

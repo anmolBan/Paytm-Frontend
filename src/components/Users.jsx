@@ -10,7 +10,7 @@ export function Users(){
     useEffect(() => {
         try{
             const token = localStorage.getItem("token");
-            axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter, {
+            axios.get("https://anmolban-paytm.onrender.com/api/v1/user/bulk?filter=" + filter, {
                 headers : {
                     Authorization: `Bearer ${token}`
                 }

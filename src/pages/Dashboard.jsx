@@ -3,14 +3,19 @@ import { AppBar } from "../components/AppBar";
 import { Balance } from "../components/Balance";
 import { Users } from "../components/Users";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 export function Dashboard(){
     const [balance, setBalance] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         try{
             const token = localStorage.getItem("token");
-            axios.get("http://localhost:3000/api/v1/account/balance", {
+            if(!token){
+                navigate("/signin");
+            }
+            axios.get("https://anmolban-paytm.onrender.com/api/v1/account/balance", {
                 headers : {
                     Authorization: `Bearer ${token}`
                 }
@@ -30,7 +35,7 @@ export function Dashboard(){
                 console.error("Error occurred:", error.message);
             }
         }
-    });
+    }, []);
             
     return (
         <div id="dashboard">
