@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Button } from "./Button";
+import { useNavigate } from "react-router-dom";
 
 export function AppBar(){
     const [name, setName] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         try{
@@ -30,19 +33,28 @@ export function AppBar(){
             }
         }
     }, []);
+
+    function onClickHandler(){
+        localStorage.removeItem("token");
+        navigate("/signin");
+    }
+
     return(
         <div className="shadow h-14 flex justify-between">
             <div className="flex flex-col justify-center h-full ml-4">
                 PayTM App
             </div>
-            <div className="flex">
+            <div className="flex w-1/4 justify-end">
                 <div className="flex flex-col justify-center h-full mr-4">
                     Hello, {name}
                 </div>
-                <div className="rounded-full h-12, w-12 bg-slate-200 flex justify-center mt-1 mr-2">
+                <div className="rounded-full h-12, w-12 bg-slate-300 flex justify-center mt-1 mr-4">
                     <div className="flex flex-col justify-center h-full text-xl">
                         {name.charAt(0)}
                     </div>
+                </div>
+                <div className="mt-2 mr-4">
+                    <Button label={"Sign out"} onClick={onClickHandler}></Button>
                 </div>
             </div>
         </div>
