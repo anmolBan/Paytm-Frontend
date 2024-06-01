@@ -15,7 +15,7 @@ export function Dashboard(){
             if(!token){
                 navigate("/signin");
             }
-            axios.get("https://anmolban-paytm.onrender.com/api/v1/account/balance", {
+            axios.get("https://pa-backend.anmolban.com/api/v1/account/balance", {
                 headers : {
                     Authorization: `Bearer ${token}`
                 }

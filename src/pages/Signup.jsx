@@ -24,7 +24,7 @@ export function Signup(){
 
     async function onClickHandler(){
         try{
-            const response = await axios.post("https://anmolban-paytm.onrender.com/api/v1/user/signup", {
+            const response = await axios.post("https://pa-backend.anmolban.com/api/v1/user/signup", {
                 username,
                 firstName,
                 lastName,

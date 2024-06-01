@@ -10,7 +10,7 @@ export function AppBar(){
     useEffect(() => {
         try{
             const token = localStorage.getItem("token")
-            axios.get("https://anmolban-paytm.onrender.com/api/v1/user/info", {
+            axios.get("https://pa-backend.anmolban.com/api/v1/user/info", {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
