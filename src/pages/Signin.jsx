@@ -48,7 +48,7 @@ export function Signin(){
                     <Heading label={"Sign in"}/>
                     <SubHeading label={"Enter your credentials to access your account"}/>
                     <InputBox onChange={(e) => setUsername(e.target.value)} label={"Email"} placeholder={"johndoe@gmail.com"}/>
-                    <InputBox onChange={(e) => setPassword(e.target.value)} label={"Password"} placeholder={""}/>
+                    <InputBox onChange={(e) => setPassword(e.target.value)} label={"Password"} placeholder={""} type={"password"}/>
                     <div className="pt-4">
                         <Button onClick={onClickHandler} label={"Sign in"}/>
                     </div>

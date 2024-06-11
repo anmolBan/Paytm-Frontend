@@ -56,7 +56,7 @@ export function Signup(){
                     <InputBox placeholder={"Doe"} label={"Last Name"}
                     onChange={(e) => setLastName(e.target.value)}></InputBox>
                     <InputBox placeholder={"xyz@gmail.com"} label={"Email"} onChange={(e) => setUsername(e.target.value)}></InputBox>
-                    <InputBox placeholder={"Password"} label={"Password"} onChange={(e) => setPassword(e.target.value)}></InputBox>
+                    <InputBox placeholder={"Password"} label={"Password"} onChange={(e) => setPassword(e.target.value)} type="password"></InputBox>
                     <div className="pt-4">
                         <Button label={"Sign up"} onClick={onClickHandler}></Button>
                     </div>
